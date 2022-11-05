@@ -35,8 +35,8 @@ app.post("/", (req, res) => {
     }
     const intX = Number(x);
     const intY = Number(y);
-    const addition = ["addition", "sum", "add", "plus"];
-    const subtraction = ["subtraction", "minus", "subtract"];
+    const addition = ["addition", "sum", "add", "plus", "summation", "altogether", "together", "total", "increase"];
+    const subtraction = ["subtraction", "minus", "subtract", "decrease", "discount", "diminution", "subduction", "difference"];
     const multiplication = ["multiplication", "product", "multiply", "times"];
     let result;
     for (let i = 0; i < addition.length; i++) {
