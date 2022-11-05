@@ -36,11 +36,11 @@ app.post("/", (req, res) => {
     const intX = Number(x);
     const intY = Number(y);
     let result;
-    if (operation_type === "addition") {
+    if (operation_type === "addition" || operation_type == /add/gi || operation_type == /plus/gi) {
       result = intX + intY;
-    } else if (operation_type === "subtraction") {
+    } else if (operation_type === "subtraction" || operation_type == /subtract/gi || operation_type == /minus/gi) {
       result = intX - intY;
-    } else if (operation_type === "multiplication") {
+    } else if (operation_type === "multiplication" || operation_type == /product/gi || operation_type == /multiply/gi) {
       result = intX * intY;
     } else {
       return errorResponse(res, 400, "Invalid Operation Type");
