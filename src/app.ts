@@ -30,31 +30,41 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
   try {
     let { x, y, operation_type }: RequestInterface = req.body;
-    if (!operation_type || !x || !y) {
+    if (!operation_type && !x && !y) {
       return errorResponse(res, 400, "Invalid inputs");
     }
-    const intX = Number(x);
-    const intY = Number(y);
+    x = Number(x);
+    x = Number(y);
     const addition = ["addition", "sum", "add", "plus", "summation", "altogether", "together", "total", "increase"];
     const subtraction = ["subtraction", "minus", "subtract", "decrease", "discount", "diminution", "subduction", "difference"];
     const multiplication = ["multiplication", "product", "multiply", "times"];
+    const opArray = operation_type.split(" ");
+    // console.log(opArray);
+    // eslint-disable-next-line array-callback-return
+    const opNumbers = opArray.filter((num) => {
+      if (parseInt(num, 10) && typeof parseInt(num, 10) === "number") {
+        return num;
+      }
+    });
+    x = parseInt(opNumbers[0], 10);
+    y = parseInt(opNumbers[1], 10);
     let result;
     for (let i = 0; i < addition.length; i++) {
-      if (operation_type.includes(addition[i])) {
+      if (opArray.includes(addition[i])) {
         operation_type = operation.addition;
-        result = intX + intY;
+        result = x + y;
       }
     }
     for (let i = 0; i < subtraction.length; i++) {
-      if (operation_type.includes(subtraction[i])) {
+      if (opArray.includes(subtraction[i])) {
         operation_type = operation.subtraction;
-        result = intX - intY;
+        result = x - y;
       }
     }
     for (let i = 0; i < multiplication.length; i++) {
-      if (operation_type.includes(multiplication[i])) {
+      if (opArray.includes(multiplication[i])) {
         operation_type = operation.multiplication;
-        result = intX * intY;
+        result = x * y;
       }
     }
     const outResult: TaskTwoInterface = {
