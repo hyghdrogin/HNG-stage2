@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import {
-  RequestInterface, TaskOneInterface, TaskTwoInterface
+  operation, RequestInterface, TaskOneInterface, TaskTwoInterface
 } from "./utils/interface";
 import { errorResponse, handleError } from "./utils/responses";
 
@@ -29,21 +29,33 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   try {
-    const { x, y, operation_type }: RequestInterface = req.body;
+    let { x, y, operation_type }: RequestInterface = req.body;
     if (!operation_type || !x || !y) {
       return errorResponse(res, 400, "Invalid inputs");
     }
     const intX = Number(x);
     const intY = Number(y);
+    const addition = ["addition", "sum", "add", "plus"];
+    const subtraction = ["subtraction", "minus", "subtract"];
+    const multiplication = ["multiplication", "product", "multiply", "times"];
     let result;
-    if (operation_type === "addition") {
-      result = intX + intY;
-    } else if (operation_type === "subtraction") {
-      result = intX - intY;
-    } else if (operation_type === "multiplication") {
-      result = intX * intY;
-    } else {
-      return errorResponse(res, 400, "Invalid Operation Type");
+    for (let i = 0; i < addition.length; i++) {
+      if (operation_type.includes(addition[i])) {
+        operation_type = operation.addition;
+        result = intX + intY;
+      }
+    }
+    for (let i = 0; i < subtraction.length; i++) {
+      if (operation_type.includes(subtraction[i])) {
+        operation_type = operation.subtraction;
+        result = intX - intY;
+      }
+    }
+    for (let i = 0; i < multiplication.length; i++) {
+      if (operation_type.includes(multiplication[i])) {
+        operation_type = operation.multiplication;
+        result = intX * intY;
+      }
     }
     const outResult: TaskTwoInterface = {
       slackUsername: "Hyghdrogin",
